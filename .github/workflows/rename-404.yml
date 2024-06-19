@@ -1,0 +1,29 @@
+name: Rename 404/index.html to 404/404.html
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Rename 404/index.html to 404/404.html
+        run: mv 404/index.html 404/404.html
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Renamed 404/index.html to 404/404.html [skip ci]"
+      
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
